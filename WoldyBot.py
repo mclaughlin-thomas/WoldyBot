@@ -1,4 +1,5 @@
 import discord
+from discord.ext import commands  #new
 import os
 import csv
 import random
