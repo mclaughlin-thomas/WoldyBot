@@ -49,6 +49,23 @@ async def on_message(message):
       await message.channel.send(
         f"{command_args}! Lets squad up baby! Get in the game {command_args}!"
       )
+  elif message.content.startswith('*kick'):
+    command_args = message.content[len('*kick'):].strip()
+    mentioned_members = message.mentions
+
+    if len(mentioned_members) == 0:
+      await message.channel.send("No members mentioned to kick.")
+    else:
+      for member in mentioned_members:
+        if message.author.guild_permissions.kick_members:
+          if member.guild_permissions.administrator:
+            await message.channel.send("You can't kick an administrator.")
+          else:
+            await member.kick()
+            await message.channel.send(f"{member.mention} has been kicked.")
+        else:
+          await message.channel.send(
+            "You don't have the required permissions to use this command.")
 
 
 my_secret = os.environ['TOKEN']
