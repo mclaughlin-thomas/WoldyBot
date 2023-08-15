@@ -86,7 +86,9 @@ async def on_message(message):
         else:
           await message.channel.send(
             "You don't have the required permissions to use this command.")
-
+  elif message.content.startswith('*flip'):
+        result = random.choice(["Heads", "Tails"])
+        await message.channel.send(f"The coin landed on **{result}**!")
 
 my_secret = os.environ['TOKEN']
 client.run(my_secret)
