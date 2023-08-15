@@ -66,6 +66,25 @@ async def on_message(message):
         else:
           await message.channel.send(
             "You don't have the required permissions to use this command.")
+  elif message.content.startswith('*demote'):
+    command_args = message.content[len('*demote'):].strip()
+    mentioned_members = message.mentions
+
+    if len(mentioned_members) == 0:
+      await message.channel.send("No members mentioned to demote.")
+    else:
+      for member in mentioned_members:
+        if message.author.guild_permissions.manage_roles:
+          role_to_remove = discord.utils.get(member.roles, name="RoleNameHere")
+          if role_to_remove:
+            await member.remove_roles(role_to_remove)
+            await message.channel.send(f"{member.mention} has been demoted.")
+          else:
+            await message.channel.send(
+              f"{member.mention} doesn't have the specified role.")
+        else:
+          await message.channel.send(
+            "You don't have the required permissions to use this command.")
 
 
 my_secret = os.environ['TOKEN']
